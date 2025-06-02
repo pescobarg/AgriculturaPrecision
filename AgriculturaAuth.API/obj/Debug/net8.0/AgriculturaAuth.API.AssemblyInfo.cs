@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AgriculturaAuth.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7d6a5a124e60ad519402117fb98f30e2926e91ca")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c43af598bced36408d33dc9f9678048d8bd90824")]
 [assembly: System.Reflection.AssemblyProductAttribute("AgriculturaAuth.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AgriculturaAuth.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
