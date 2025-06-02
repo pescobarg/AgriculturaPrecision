@@ -1,0 +1,118 @@
+<div class="register-container">
+  <div class="register-card">
+    <header class="register-card-header">
+      <h2 class="register-card-title">Registro de Usuario</h2>
+      <p class="register-card-subtitle">Sistema Agricultura de Precisión</p>
+    </header>
+    
+    <div class="register-card-content">
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+
+        <!-- Información Personal -->
+        <section class="form-section">
+          <h3>Información Personal</h3>
+          
+          <div class="form-row">
+            <div class="form-field half-width">
+              <label for="firstName">Nombre</label>
+              <input id="firstName" type="text" formControlName="firstName" placeholder="Ingrese su nombre" />
+              <div class="error-message" *ngIf="registerForm.get('firstName')?.invalid && registerForm.get('firstName')?.touched">
+                {{ getErrorMessage('firstName') }}
+              </div>
+            </div>
+
+            <div class="form-field half-width">
+              <label for="lastName">Apellido</label>
+              <input id="lastName" type="text" formControlName="lastName" placeholder="Ingrese su apellido" />
+              <div class="error-message" *ngIf="registerForm.get('lastName')?.invalid && registerForm.get('lastName')?.touched">
+                {{ getErrorMessage('lastName') }}
+              </div>
+            </div>
+          </div>
+
+          <div class="form-field full-width">
+            <label for="telefono">Teléfono</label>
+            <input id="telefono" type="text" formControlName="telefono" placeholder="Ingrese su teléfono" />
+            <div class="error-message" *ngIf="registerForm.get('telefono')?.invalid && registerForm.get('telefono')?.touched">
+              {{ getErrorMessage('telefono') }}
+            </div>
+          </div>
+
+          <div class="form-field full-width">
+            <label for="role">Rol</label>
+            <select id="role" formControlName="role">
+              <option *ngFor="let role of roles" [value]="role.value">{{ role.label }}</option>
+            </select>
+            <div class="error-message" *ngIf="registerForm.get('role')?.invalid && registerForm.get('role')?.touched">
+              {{ getErrorMessage('role') }}
+            </div>
+          </div>
+        </section>
+
+        <!-- Información de Cuenta -->
+        <section class="form-section">
+          <h3>Información de Cuenta</h3>
+          
+          <div class="form-field full-width">
+            <label for="username">Usuario</label>
+            <input id="username" type="text" formControlName="username" placeholder="Ingrese su nombre de usuario" />
+            <div class="error-message" *ngIf="registerForm.get('username')?.invalid && registerForm.get('username')?.touched">
+              {{ getErrorMessage('username') }}
+            </div>
+          </div>
+
+          <div class="form-field full-width">
+            <label for="email">Email</label>
+            <input id="email" type="email" formControlName="email" placeholder="Ingrese su email" />
+            <div class="error-message" *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
+              {{ getErrorMessage('email') }}
+            </div>
+          </div>
+
+          <div class="form-field full-width">
+            <label for="password">Contraseña</label>
+            <input id="password" type="password" formControlName="password" placeholder="Ingrese su contraseña" />
+            <div class="error-message" *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
+              {{ getErrorMessage('password') }}
+            </div>
+          </div>
+
+          <div class="form-field full-width">
+            <label for="confirmPassword">Confirmar Contraseña</label>
+            <input id="confirmPassword" type="password" formControlName="confirmPassword" placeholder="Confirme su contraseña" />
+            <div class="error-message" *ngIf="registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched">
+              {{ getErrorMessage('confirmPassword') }}
+            </div>
+          </div>
+        </section>
+
+        <!-- Mensajes -->
+        <div *ngIf="error" class="error-message">
+          {{ error }}
+        </div>
+
+        <div *ngIf="success" class="success-message">
+          <span class="success-icon">✔️</span>
+          <span>Usuario registrado exitosamente. Redirigiendo al login...</span>
+        </div>
+
+        <!-- Botones -->
+        <div class="button-container">
+          <button type="submit" [disabled]="registerForm.invalid || loading" class="btn-primary full-width">
+            <span *ngIf="loading" class="spinner"></span>
+            <span *ngIf="!loading">Registrarse</span>
+          </button>
+        </div>
+
+        <div class="login-link">
+          <p>¿Ya tienes cuenta? 
+            <button type="button" class="btn-link" (click)="navigateToLogin()">
+              Inicia sesión aquí
+            </button>
+          </p>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>

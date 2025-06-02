@@ -1,0 +1,6 @@
+@AgriculturaAuth.API_HostAddress = http://localhost:5146
+
+GET {{AgriculturaAuth.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
