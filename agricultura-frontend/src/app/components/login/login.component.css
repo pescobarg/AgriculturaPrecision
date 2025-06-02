@@ -1,98 +1,201 @@
+/* Contenedor principal */
+.login-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #e8f5e8 0%, #c8e6c9 100%);
+  padding: 20px;
+}
+
+.login-card {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(76, 175, 80, 0.15);
+  padding: 40px;
+  width: 100%;
+  max-width: 420px;
+  border: 1px solid rgba(129, 199, 132, 0.2);
+}
+
+/* Header del login */
 .login-header {
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 }
 
 .login-title {
-  font-size: 24px;
-  font-weight: 600;
-  color: #333;
-  margin: 0;
+  font-size: 26px;
+  font-weight: 700;
+  color: #2e7d32;
+  margin: 0 0 8px 0;
+  text-shadow: 0 2px 4px rgba(76, 175, 80, 0.2);
 }
 
 .login-subtitle {
-  font-size: 16px;
-  color: #666;
+  font-size: 18px;
+  color: #4caf50;
   margin: 0;
+  font-weight: 500;
+}
+
+/* Contenido del formulario */
+.login-content {
+  margin-top: 20px;
 }
 
 .form-group {
   display: flex;
   flex-direction: column;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
+}
+
+.form-group.full-width {
+  width: 100%;
 }
 
 .form-group label {
-  margin-bottom: 5px;
-  font-weight: 500;
-  color: #444;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #388e3c;
+  font-size: 14px;
 }
 
 .form-group input {
-  padding: 10px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  font-size: 14px;
+  padding: 14px 16px;
+  border-radius: 10px;
+  border: 2px solid #c8e6c9;
+  font-size: 16px;
   outline: none;
-  transition: border-color 0.3s ease;
+  transition: all 0.3s ease;
+  background-color: #f1f8e9;
 }
 
 .form-group input:focus {
-  border-color: #667eea;
+  border-color: #4caf50;
+  background-color: white;
+  box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
 }
 
+.form-group input::placeholder {
+  color: #a0aec0;
+}
+
+/* Mensajes de error */
 .error-text {
-  color: #d32f2f;
+  color: #e53e3e;
   font-size: 13px;
-  margin-top: 5px;
+  margin-top: 6px;
+  font-weight: 500;
+}
+
+.error-message {
+  margin-bottom: 20px;
+  padding: 12px;
+  background-color: #fed7d7;
+  border: 1px solid #feb2b2;
+  border-radius: 8px;
+}
+
+/* Botones */
+.button-container {
+  margin: 25px 0;
 }
 
 .primary-button {
-  background-color: #667eea;
+  background: linear-gradient(135deg, #66bb6a 0%, #4caf50 50%, #388e3c 100%);
   color: white;
-  padding: 12px;
+  padding: 16px 24px;
   font-size: 16px;
+  font-weight: 600;
   border: none;
-  border-radius: 8px;
+  border-radius: 12px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.primary-button:disabled {
-  background-color: #a3a3a3;
-  cursor: not-allowed;
+  transition: all 0.3s ease;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
 }
 
 .primary-button:hover:not(:disabled) {
-  background-color: #5a6ddb;
+  background: linear-gradient(135deg, #5cb85c 0%, #449d48 50%, #357a35 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(76, 175, 80, 0.3);
+}
+
+.primary-button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.primary-button:disabled {
+  background: linear-gradient(135deg, #a5d6a7 0%, #81c784 100%);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+  opacity: 0.7;
+}
+
+.full-width {
+  width: 100%;
+}
+
+/* Link de registro */
+.register-link {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.register-link p {
+  color: #66bb6a;
+  font-size: 14px;
+  margin: 0;
 }
 
 .link-button {
   background: none;
   border: none;
-  color: #764ba2;
+  color: #2e7d32;
   cursor: pointer;
   font-weight: 600;
   padding: 0;
   font-size: 14px;
+  transition: color 0.3s ease;
 }
 
 .link-button:hover {
+  color: #4caf50;
   text-decoration: underline;
 }
 
+/* Spinner */
 .spinner {
   display: inline-block;
   width: 20px;
   height: 20px;
-  border: 3px solid rgba(255, 255, 255, 0.6);
+  border: 3px solid rgba(255, 255, 255, 0.3);
   border-top-color: white;
   border-radius: 50%;
   animation: spin 1s linear infinite;
   vertical-align: middle;
-  margin-right: 8px;
+  margin-right: 10px;
 }
 
 @keyframes spin {
   to { transform: rotate(360deg); }
+}
+
+/* Responsividad */
+@media (max-width: 480px) {
+  .login-card {
+    padding: 30px 20px;
+    margin: 10px;
+  }
+  
+  .login-title {
+    font-size: 22px;
+  }
+  
+  .login-subtitle {
+    font-size: 16px;
+  }
 }

@@ -1,0 +1,53 @@
+/* Footer que aparece al final del contenido, no fijo */
+.footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Asegura que no haya overflow horizontal */
+.container {
+    width: 100%;
+    max-width: 1200px; /* Reducido para evitar problemas de ancho */
+    margin: 0 auto;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+.logo img {
+    width: 100px;
+    margin-bottom: 10px;
+}
+
+.contact-info {
+    font-size: 1rem;
+    color: #ddd;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .logo img {
+        width: 80px;
+    }
+    
+    .contact-info {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .footer {
+        padding: 15px 0;
+    }
+    
+    .logo img {
+        width: 70px;
+    }
+    
+    .contact-info {
+        font-size: 0.8rem;
+    }
+}

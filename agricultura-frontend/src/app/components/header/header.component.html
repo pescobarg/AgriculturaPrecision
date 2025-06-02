@@ -1,0 +1,48 @@
+<nav class="nav">
+  <div class="nav-content">
+    <!-- Sección del Logo -->
+    <div class="logo-section">
+      <a class="logo" (click)="irHome()">
+        <img src="/assets/logo_SAP_nofondo.png" alt="SAP" />
+      </a>
+    </div>
+
+    <!-- Sección de Enlaces de Navegación (solo si está logueado) -->
+    <div class="nav-links" *ngIf="isLoggedIn && navItems.length > 0">
+      <a 
+        *ngFor="let item of navItems" 
+        class="nav-item" 
+        (click)="item.action()"
+      >
+        {{ item.icon }} {{ item.label }}
+      </a>
+    </div>
+
+    <!-- Sección de Acciones -->
+    <div class="nav-actions">
+      <!-- Botones para usuarios NO logueados -->
+      <ng-container *ngIf="!isLoggedIn">
+        <button class="btn-outline" (click)="irLogin()">
+          Iniciar Sesión
+        </button>
+        <button class="btn-primary" (click)="irRegister()">
+          Registrarse
+        </button>
+      </ng-container>
+
+      <!-- Acciones para usuarios logueados -->
+      <ng-container *ngIf="isLoggedIn">
+        <!-- Botón de notificaciones (campana) -->
+        <button class="btn-notification" (click)="irNotificaciones()" title="Notificaciones">
+          🔔
+        </button>
+
+        <!-- Botón logout -->
+        <button class="btn-logout" (click)="logout()">
+          <img src="/assets/logout.png" alt="Logout" class="logout-icon" />
+          Cerrar Sesión
+        </button>
+      </ng-container>
+    </div>
+  </div>
+</nav>

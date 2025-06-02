@@ -1,0 +1,406 @@
+/* 1) Cargo Quinoa Round desde assets */
+@font-face {
+    font-family: "Quinoa Round";
+    src: url("/assets/fonts/QuinoaRoundRegular.otf") format("opentype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* 2) Reset del header */
+.nav,
+.nav * {
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "Quinoa Round", "Poppins", sans-serif;
+}
+
+/* 3) Contenedor principal del nav */
+.nav {
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    height: 80px;
+    width: 100%;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    backdrop-filter: blur(15px);
+}
+
+/* 4) Layout responsivo con max-width controlado */
+.nav-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    padding: 0 4%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* 5) Sección del logo */
+.logo-section {
+    flex: 0 0 auto;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+.logo:hover {
+    transform: scale(1.05);
+}
+
+.logo img {
+    height: 55px;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+}
+
+/* 6) Sección de navegación central */
+.nav-links {
+    display: flex;
+    gap: 35px;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    max-width: 600px;
+    margin: 0 20px;
+}
+
+/* 7) Sección de acciones (botones) */
+.nav-actions {
+    display: flex;
+    gap: 15px;
+    flex: 0 0 auto;
+    align-items: center;
+}
+
+/* 8) Estilos de items de navegación */
+.nav-item {
+    text-decoration: none;
+    color: #2c3e50;
+    font-size: 1.05rem;
+    font-weight: 600;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    padding: 8px 16px;
+    border-radius: 6px;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.nav-item::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 2px;
+    left: 50%;
+    background: linear-gradient(90deg, #4C6F2E, #228B22);
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+    border-radius: 1px;
+}
+
+.nav-item:hover {
+    color: #4C6F2E;
+    background: rgba(76, 111, 46, 0.05);
+    transform: translateY(-1px);
+}
+
+.nav-item:hover::after {
+    width: 80%;
+}
+
+/* 9) Botones principales */
+.btn-primary {
+    background: linear-gradient(135deg, #4C6F2E 0%, #228B22 100%);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 12px rgba(76, 111, 46, 0.25);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 18px rgba(76, 111, 46, 0.35);
+    background: linear-gradient(135deg, #3E5A25 0%, #1F7A1F 100%);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+}
+
+/* 10) Botón outline */
+.btn-outline {
+    border: 2px solid #654321;
+    color: #654321;
+    background: transparent;
+    padding: 10px 22px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+}
+
+.btn-outline:hover {
+    background: #654321;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(101, 67, 33, 0.25);
+}
+
+/* 11) Botón de notificaciones (campana) */
+.btn-notification {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #FFB74D 0%, #FF9800 100%);
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 12px rgba(255, 152, 0, 0.25);
+    width: 44px;
+    height: 44px;
+    position: relative;
+}
+
+.btn-notification:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 5px 18px rgba(255, 152, 0, 0.35);
+    background: linear-gradient(135deg, #FFA726 0%, #F57C00 100%);
+}
+
+.btn-notification::after {
+    content: '';
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    width: 8px;
+    height: 8px;
+    background: #f44336;
+    border-radius: 50%;
+    border: 2px solid white;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.btn-notification.has-notifications::after {
+    opacity: 1;
+}
+
+/* 12) Botón logout especial */
+.btn-logout {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, #8b1313 0%, #f57d7d 100%);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 12px rgba(82, 11, 11, 0.25);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+}
+
+.btn-logout:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 18px rgba(139, 69, 19, 0.35);
+    background: linear-gradient(135deg, #750909 0%, #740404 100%);
+}
+
+.logout-icon {
+    width: 16px;
+    height: 16px;
+    filter: brightness(0) invert(1);
+}
+
+/* 13) Responsive mejorado */
+@media (max-width: 1400px) {
+    .nav-content {
+        max-width: 1100px;
+        padding: 0 3%;
+    }
+}
+
+@media (max-width: 1200px) {
+    .nav-content {
+        padding: 0 2.5%;
+    }
+    
+    .nav-links {
+        gap: 25px;
+        margin: 0 15px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .nav-content {
+        padding: 0 2%;
+    }
+    
+    .nav-links {
+        gap: 20px;
+        margin: 0 10px;
+    }
+    
+    .nav-actions {
+        gap: 12px;
+    }
+    
+    .nav-item {
+        font-size: 1rem;
+        padding: 6px 12px;
+    }
+}
+
+@media (max-width: 768px) {
+    .nav {
+        height: 70px;
+    }
+    
+    .nav-content {
+        padding: 0 15px;
+    }
+    
+    .nav-links {
+        gap: 15px;
+        margin: 0 8px;
+    }
+    
+    .nav-item {
+        font-size: 0.9rem;
+        padding: 6px 10px;
+    }
+    
+    .btn-primary,
+    .btn-outline,
+    .btn-logout {
+        padding: 8px 16px;
+        font-size: 0.8rem;
+    }
+    
+    .btn-notification {
+        width: 40px;
+        height: 40px;
+        font-size: 1.1rem;
+    }
+    
+    .logo img {
+        height: 45px;
+    }
+}
+
+@media (max-width: 640px) {
+    .nav {
+        height: auto;
+        min-height: 70px;
+        padding: 10px 0;
+    }
+    
+    .nav-content {
+        flex-direction: column;
+        gap: 15px;
+        padding: 0 15px;
+    }
+    
+    .nav-links {
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 15px;
+        margin: 0;
+        max-width: none;
+    }
+    
+    .nav-actions {
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    
+    .logo img {
+        height: 40px;
+    }
+}
+
+@media (max-width: 480px) {
+    .nav-content {
+        padding: 0 10px;
+        gap: 10px;
+    }
+    
+    .nav-item {
+        font-size: 0.85rem;
+        padding: 6px 8px;
+    }
+    
+    .btn-primary,
+    .btn-outline,
+    .btn-logout {
+        padding: 8px 12px;
+        font-size: 0.75rem;
+    }
+    
+    .btn-notification {
+        width: 36px;
+        height: 36px;
+        font-size: 1rem;
+    }
+}
+
+/* 14) Para pantallas muy grandes */
+@media (min-width: 1600px) {
+    .nav-content {
+        max-width: 1300px;
+    }
+}
+
+/* 15) Mejoras de accesibilidad */
+.nav-item:focus,
+.btn-primary:focus,
+.btn-outline:focus,
+.btn-logout:focus,
+.btn-notification:focus {
+    outline: 2px solid #4C6F2E;
+    outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        transition: none !important;
+        animation: none !important;
+    }
+}

@@ -46,8 +46,9 @@ export class AuthService {
   public currentUser$ = this.currentUserSubject.asObservable();
 
   constructor(private http: HttpClient, private router: Router) {
-    // Verificar si hay un token almacenado al inicializar el servicio
-    this.checkStoredToken();
+    if (typeof window !== 'undefined') {
+      this.checkStoredToken();
+    }
   }
 
   private checkStoredToken(): void {
@@ -81,8 +82,10 @@ export class AuthService {
   }
 
   logout(): void {
-    localStorage.removeItem('access_token');
-    localStorage.removeItem('refresh_token');
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('access_token');
+      localStorage.removeItem('refresh_token');
+    }
     this.currentUserSubject.next(null);
     this.router.navigate(['/login']);
   }
@@ -92,15 +95,22 @@ export class AuthService {
   }
 
   getStoredToken(): string | null {
-    return localStorage.getItem('access_token');
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('access_token');
+    }
+    return null;
   }
 
   private storeToken(token: string): void {
-    localStorage.setItem('access_token', token);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('access_token', token);
+    }
   }
 
   private storeRefreshToken(token: string): void {
-    localStorage.setItem('refresh_token', token);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('refresh_token', token);
+    }
   }
 
   private getAuthHeaders(): HttpHeaders {

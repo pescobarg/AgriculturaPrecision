@@ -31,7 +31,7 @@ namespace AgriculturaAuth.API.Services
             _keycloakBaseUrl = "http://localhost:8080";
             _realm = "agricultura-precision";
             _clientId = "agricultura-backend";
-            _clientSecret = "Uy8TkVCSSFPuuPESrM4g0GT0PzLiuxlg";
+            _clientSecret = "EUaGHiefwiocvFaaDuQmkNiCpTVYIh5n";
             _dbContext = dbContext;
 
         }
