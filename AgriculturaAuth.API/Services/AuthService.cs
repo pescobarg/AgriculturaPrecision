@@ -20,21 +20,26 @@ namespace AgriculturaAuth.API.Services
         private readonly string _realm;
         private readonly string _clientId;
         private readonly string _clientSecret;
+        private readonly ApplicationDbContext _dbContext;
 
-        public AuthService(IHttpClientFactory httpClientFactory, IConfiguration configuration)
+
+
+        public AuthService(IHttpClientFactory httpClientFactory, IConfiguration configuration, ApplicationDbContext dbContext)
         {
             _httpClient = httpClientFactory.CreateClient("keycloak");
             _configuration = configuration;
             _keycloakBaseUrl = "http://localhost:8080";
             _realm = "agricultura-precision";
             _clientId = "agricultura-backend";
-            _clientSecret = "Wj6E22s133FBJTHIFMXFz6MJhtmu1hCe"; // Reemplazar con el secret real
+            _clientSecret = "Uy8TkVCSSFPuuPESrM4g0GT0PzLiuxlg";
+            _dbContext = dbContext;
+
         }
 
         public async Task<AuthResponse> LoginAsync(LoginRequest request)
         {
             var tokenEndpoint = $"{_keycloakBaseUrl}/realms/{_realm}/protocol/openid-connect/token";
-            
+
             var formParams = new List<KeyValuePair<string, string>>
             {
                 new("grant_type", "password"),
@@ -67,15 +72,14 @@ namespace AgriculturaAuth.API.Services
                 User = userInfo
             };
         }
-
         public async Task<bool> RegisterAsync(RegisterRequest request)
         {
-            // Primero obtener token de admin
+            // Obtener token admin
             var adminToken = await GetAdminTokenAsync();
-            
-            // Crear usuario en Keycloak
+
+            // Endpoint para crear usuario en Keycloak
             var userEndpoint = $"{_keycloakBaseUrl}/admin/realms/{_realm}/users";
-            
+
             var keycloakUser = new KeycloakUserRepresentation
             {
                 username = request.Username,
@@ -84,52 +88,70 @@ namespace AgriculturaAuth.API.Services
                 lastName = request.LastName,
                 enabled = true,
                 attributes = new Dictionary<string, List<string>>
-                {
-                    { "telefono", new List<string> { request.Telefono } }
-                },
+        {
+            { "telefono", new List<string> { request.Telefono } }
+        },
                 credentials = new List<KeycloakCredential>
-                {
-                    new KeycloakCredential
-                    {
-                        type = "password",
-                        value = request.Password,
-                        temporary = false
-                    }
-                },
+        {
+            new KeycloakCredential
+            {
+                type = "password",
+                value = request.Password,
+                temporary = false
+            }
+        },
                 realmRoles = new List<string> { request.Role }
             };
 
             var json = JsonConvert.SerializeObject(keycloakUser);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
-            
-            _httpClient.DefaultRequestHeaders.Authorization = 
+
+            _httpClient.DefaultRequestHeaders.Authorization =
                 new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", adminToken);
 
             var response = await _httpClient.PostAsync(userEndpoint, content);
-            
+
             if (response.IsSuccessStatusCode || response.StatusCode == System.Net.HttpStatusCode.Created)
             {
-                // Asignar rol al usuario
+                // Obtener Id de usuario creado en Keycloak
                 var userId = await GetUserIdByUsernameAsync(request.Username, adminToken);
                 if (!string.IsNullOrEmpty(userId))
                 {
+                    // Asignar rol al usuario en Keycloak
                     await AssignRoleToUserAsync(userId, request.Role, adminToken);
+
+                    // Guardar usuario en base de datos local
+                    var nuevoUsuario = new ApplicationUser
+                    {
+                        Username = request.Username,
+                        Email = request.Email,
+                        FirstName = request.FirstName,
+                        LastName = request.LastName,
+                        Telefono = request.Telefono,
+                        Role = request.Role
+                    };
+
+                    _dbContext.Users.Add(nuevoUsuario);
+                    await _dbContext.SaveChangesAsync();
+
+                    return true;
                 }
-                return true;
             }
 
+            // Si algo falla
             return false;
         }
+
 
         public async Task<UserInfo> GetUserInfoAsync(string token)
         {
             var userInfoEndpoint = $"{_keycloakBaseUrl}/realms/{_realm}/protocol/openid-connect/userinfo";
-            
-            _httpClient.DefaultRequestHeaders.Authorization = 
+
+            _httpClient.DefaultRequestHeaders.Authorization =
                 new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
 
             var response = await _httpClient.GetAsync(userInfoEndpoint);
-            
+
             if (!response.IsSuccessStatusCode)
             {
                 throw new Exception("Failed to get user info");
@@ -143,7 +165,7 @@ namespace AgriculturaAuth.API.Services
             var jsonToken = handler.ReadJwtToken(token);
             var realmAccess = jsonToken.Claims.FirstOrDefault(c => c.Type == "realm_access")?.Value;
             var roles = new List<string>();
-            
+
             if (!string.IsNullOrEmpty(realmAccess))
             {
                 var realmAccessObj = JsonConvert.DeserializeObject<Dictionary<string, List<string>>>(realmAccess);
@@ -168,7 +190,7 @@ namespace AgriculturaAuth.API.Services
         private async Task<string> GetAdminTokenAsync()
         {
             var tokenEndpoint = $"{_keycloakBaseUrl}/realms/master/protocol/openid-connect/token";
-            
+
             var formParams = new List<KeyValuePair<string, string>>
             {
                 new("grant_type", "password"),
@@ -179,24 +201,24 @@ namespace AgriculturaAuth.API.Services
 
             var formContent = new FormUrlEncodedContent(formParams);
             var response = await _httpClient.PostAsync(tokenEndpoint, formContent);
-            
+
             var content = await response.Content.ReadAsStringAsync();
             var tokenResponse = JsonConvert.DeserializeObject<KeycloakTokenResponse>(content);
-            
+
             return tokenResponse.access_token;
         }
 
         private async Task<string> GetUserIdByUsernameAsync(string username, string adminToken)
         {
             var usersEndpoint = $"{_keycloakBaseUrl}/admin/realms/{_realm}/users?username={username}";
-            
-            _httpClient.DefaultRequestHeaders.Authorization = 
+
+            _httpClient.DefaultRequestHeaders.Authorization =
                 new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", adminToken);
 
             var response = await _httpClient.GetAsync(usersEndpoint);
             var content = await response.Content.ReadAsStringAsync();
             var users = JsonConvert.DeserializeObject<List<KeycloakUserRepresentation>>(content);
-            
+
             return users?.FirstOrDefault()?.id;
         }
 
@@ -204,8 +226,8 @@ namespace AgriculturaAuth.API.Services
         {
             // Primero obtener el rol
             var rolesEndpoint = $"{_keycloakBaseUrl}/admin/realms/{_realm}/roles/{roleName}";
-            
-            _httpClient.DefaultRequestHeaders.Authorization = 
+
+            _httpClient.DefaultRequestHeaders.Authorization =
                 new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", adminToken);
 
             var roleResponse = await _httpClient.GetAsync(rolesEndpoint);
