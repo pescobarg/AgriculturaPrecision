@@ -1,0 +1,416 @@
+.pedidos-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f8fdf8;
+  min-height: 100vh;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 30px;
+  padding: 20px;
+  background: linear-gradient(135deg, #1b4332, #2d5a41);
+  color: white;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(27, 67, 50, 0.3);
+}
+
+.titulo {
+  font-size: 2.5rem;
+  margin: 0;
+  font-weight: bold;
+}
+
+.subtitulo {
+  font-size: 1.1rem;
+  margin: 10px 0 0 0;
+  opacity: 0.9;
+}
+
+.pedidos-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.pedido-card {
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  border-left: 5px solid #2d5a41;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.pedido-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+}
+
+.pedido-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 25px;
+  background: linear-gradient(135deg, #f8fdf8, #e8f5e8);
+  border-bottom: 2px solid #e9ecef;
+}
+
+.pedido-info-principal {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.pedido-id {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #1b4332;
+  margin: 0;
+}
+
+.pedido-fecha {
+  color: #666;
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.estado-container {
+  text-align: right;
+}
+
+.estado-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-weight: bold;
+  font-size: 0.9rem;
+  margin-bottom: 5px;
+}
+
+.estado-almacen {
+  background: #fff3cd;
+  color: #856404;
+  border: 2px solid #ffeaa7;
+}
+
+.estado-curso {
+  background: #cce5ff;
+  color: #004085;
+  border: 2px solid #74b9ff;
+}
+
+.estado-fallido {
+  background: #f8d7da;
+  color: #721c24;
+  border: 2px solid #f5c6cb;
+}
+
+.estado-recoger {
+  background: #d1ecf1;
+  color: #0c5460;
+  border: 2px solid #81ecec;
+}
+
+.estado-recogido {
+  background: #d4edda;
+  color: #155724;
+  border: 2px solid #00b894;
+}
+
+.estado-icono {
+  font-size: 1.1rem;
+}
+
+.estado-descripcion {
+  font-size: 0.85rem;
+  color: #666;
+  margin: 0;
+  font-style: italic;
+}
+
+.entrega-info {
+  padding: 20px 25px;
+  background: #f8f9fa;
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.info-label {
+  font-weight: 600;
+  color: #2d5a41;
+}
+
+.info-value {
+  color: #495057;
+}
+
+.productos-pedido {
+  padding: 25px;
+}
+
+.productos-titulo {
+  color: #1b4332;
+  margin: 0 0 20px 0;
+  font-size: 1.2rem;
+  border-bottom: 2px solid #52b788;
+  padding-bottom: 10px;
+}
+
+.producto-item {
+  display: grid;
+  grid-template-columns: 80px 1fr auto;
+  gap: 20px;
+  align-items: center;
+  padding: 15px 0;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.producto-item:last-child {
+  border-bottom: none;
+}
+
+.producto-imagen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #f8f9fa;
+}
+
+.producto-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.producto-detalles {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.producto-nombre {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #1b4332;
+  margin: 0;
+}
+
+.producto-descripcion {
+  color: #666;
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.producto-meta {
+  display: flex;
+  gap: 15px;
+  font-size: 0.85rem;
+}
+
+.categoria {
+  color: #2d5a41;
+  font-weight: 600;
+}
+
+.proveedor {
+  color: #888;
+  font-style: italic;
+}
+
+.etiquetas {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.etiqueta {
+  background: #52b788;
+  color: white;
+  padding: 3px 8px;
+  border-radius: 10px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.producto-precio-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+}
+
+.precio-unitario {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.precio {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #1b4332;
+}
+
+.unidad {
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.cantidad-info {
+  display: flex;
+  gap: 5px;
+  font-size: 0.9rem;
+}
+
+.cantidad-label {
+  color: #666;
+}
+
+.cantidad-valor {
+  font-weight: bold;
+  color: #2d5a41;
+}
+
+.subtotal {
+  font-size: 1.2rem;
+  color: #1b4332;
+}
+
+.pedido-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 25px;
+  background: linear-gradient(135deg, #f8fdf8, #e8f5e8);
+  border-top: 2px solid #e9ecef;
+}
+
+.total-pedido {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.total-label {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.total-valor {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #1b4332;
+}
+
+.acciones-pedido {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.btn-accion {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-detalles {
+  background: #17a2b8;
+  color: white;
+}
+
+.btn-detalles:hover {
+  background: #138496;
+  transform: translateY(-1px);
+}
+
+.btn-factura {
+  background: #6c757d;
+  color: white;
+}
+
+.btn-factura:hover {
+  background: #5a6268;
+  transform: translateY(-1px);
+}
+
+.btn-reordenar {
+  background: #52b788;
+  color: white;
+}
+
+.btn-reordenar:hover {
+  background: #2d5a41;
+  transform: translateY(-1px);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .pedido-header {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+  }
+  
+  .estado-container {
+    text-align: center;
+  }
+  
+  .entrega-info {
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .producto-item {
+    grid-template-columns: 60px 1fr;
+    gap: 15px;
+  }
+  
+  .producto-precio-info {
+    grid-column: span 2;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 10px;
+  }
+  
+  .pedido-footer {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+  }
+  
+  .acciones-pedido {
+    justify-content: center;
+    width: 100%;
+  }
+  
+  .titulo {
+    font-size: 2rem;
+  }
+}

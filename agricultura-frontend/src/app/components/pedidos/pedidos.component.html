@@ -1,0 +1,96 @@
+<div class="pedidos-container">
+  <div class="header">
+    <h1 class="titulo">📋 Mis Pedidos</h1>
+    <p class="subtitulo">Historial y estado de tus pedidos agrícolas</p>
+  </div>
+
+  <div class="pedidos-lista">
+    <div class="pedido-card" *ngFor="let pedido of pedidos">
+      
+      <!-- Header del Pedido -->
+      <div class="pedido-header">
+        <div class="pedido-info-principal">
+          <h3 class="pedido-id">{{ pedido.id }}</h3>
+          <p class="pedido-fecha">{{ formatearFecha(pedido.fecha) }}</p>
+        </div>
+        
+        <div class="estado-container">
+          <div class="estado-badge" [ngClass]="getEstadoConfig(pedido.estado).clase">
+            <span class="estado-icono">{{ getEstadoConfig(pedido.estado).icono }}</span>
+            <span class="estado-texto">{{ getEstadoConfig(pedido.estado).texto }}</span>
+          </div>
+          <p class="estado-descripcion">{{ getEstadoConfig(pedido.estado).descripcion }}</p>
+        </div>
+      </div>
+
+      <!-- Información de Entrega -->
+      <div class="entrega-info">
+        <div class="info-item">
+          <span class="info-label">📍 Dirección:</span>
+          <span class="info-value">{{ pedido.direccionEntrega }}</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">💳 Pago:</span>
+          <span class="info-value">{{ pedido.metodoPago }}</span>
+        </div>
+      </div>
+
+      <!-- Productos del Pedido -->
+      <div class="productos-pedido">
+        <h4 class="productos-titulo">Productos ({{ pedido.productos.length }})</h4>
+        
+        <div class="producto-item" *ngFor="let producto of pedido.productos">
+          <div class="producto-imagen">
+            <img [src]="producto.imagen" [alt]="producto.nombre" class="producto-img">
+          </div>
+          
+          <div class="producto-detalles">
+            <h5 class="producto-nombre">{{ producto.nombre }}</h5>
+            <p class="producto-descripcion">{{ producto.descripcion }}</p>
+            
+            <div class="producto-meta">
+              <span class="categoria">{{ producto.categoria }}</span>
+              <span class="proveedor">{{ producto.proveedor }}</span>
+            </div>
+            
+            <div class="etiquetas">
+              <span class="etiqueta" *ngFor="let etiqueta of producto.etiquetas">
+                {{ etiqueta }}
+              </span>
+            </div>
+          </div>
+          
+          <div class="producto-precio-info">
+            <div class="precio-unitario">
+              <span class="precio">${{ producto.precio }}</span>
+              <span class="unidad">/ {{ producto.unidad }}</span>
+            </div>
+            
+            <div class="cantidad-info">
+              <span class="cantidad-label">Cantidad:</span>
+              <span class="cantidad-valor">{{ producto.cantidad }}</span>
+            </div>
+            
+            <div class="subtotal">
+              <strong>${{ calcularSubtotal(producto).toFixed(2) }}</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Total y Acciones -->
+      <div class="pedido-footer">
+        <div class="total-pedido">
+          <span class="total-label">Total del Pedido:</span>
+          <span class="total-valor">${{ pedido.total.toFixed(2) }}</span>
+        </div>
+        
+        <div class="acciones-pedido">
+          <button class="btn-accion btn-factura" (click)="descargarFactura(pedido)">
+            📄 Factura
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

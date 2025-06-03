@@ -1,0 +1,362 @@
+<div class="productos-container">
+  <div class="header">
+    <h1>Gestión de Productos</h1>
+    <button class="btn btn-primary" (click)="crearProducto()">
+      <i class="icon">+</i>
+      Nuevo Producto
+    </button>
+  </div>
+
+  <!-- Lista de productos -->
+  <div class="productos-grid" *ngIf="!mostrarFormulario && !mostrarDetalle">
+    <div class="producto-card" *ngFor="let producto of productos">
+      <div class="producto-imagen">
+        <img [src]="producto.imagen" [alt]="producto.nombre" onerror="this.src='https://via.placeholder.com/300x200?text=Sin+Imagen'">
+        <div class="stock-badge" [class.low-stock]="producto.stock < 10">
+          Stock: {{producto.stock}}
+        </div>
+      </div>
+      
+      <div class="producto-info">
+        <h3>{{producto.nombre}}</h3>
+        <p class="categoria">{{producto.categoria}}</p>
+        <p class="descripcion">{{producto.descripcion}}</p>
+        <div class="precio">${{producto.precio | number}} / {{producto.unidad}}</div>
+        <div class="proveedor">{{producto.proveedor}}</div>
+        <div class="disponibilidad" [class.no-disponible]="!producto.disponible">
+          {{producto.disponible ? 'Disponible' : 'No disponible'}}
+        </div>
+      </div>
+
+      <div class="producto-actions">
+        <button class="btn btn-outline" (click)="verDetalle(producto)">Ver Detalle</button>
+        <button class="btn btn-secondary" (click)="editarProducto(producto)">Editar</button>
+        <button class="btn btn-danger" (click)="eliminarProducto(producto.id)">Eliminar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Formulario de producto -->
+  <div class="formulario-container" *ngIf="mostrarFormulario">
+    <div class="form-header">
+      <h2>{{editando ? 'Editar' : 'Crear'}} Producto</h2>
+      <button class="btn btn-outline" (click)="cancelarFormulario()">Cancelar</button>
+    </div>
+
+    <form class="producto-form" (ngSubmit)="guardarProducto()">
+      <div class="form-grid">
+        <!-- Información básica -->
+        <div class="form-section">
+          <h3>Información Básica</h3>
+          
+          <div class="form-group">
+            <label>Nombre *</label>
+            <input type="text" [(ngModel)]="productoForm.nombre" name="nombre" required>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Categoría *</label>
+              <select [(ngModel)]="productoForm.categoria" name="categoria" required>
+                <option value="">Seleccionar categoría</option>
+                <option value="Frutas">Frutas</option>
+                <option value="Verduras">Verduras</option>
+                <option value="Proteínas">Proteínas</option>
+                <option value="Lácteos">Lácteos</option>
+                <option value="Granos">Granos</option>
+                <option value="Especias">Especias</option>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label>Código de Producto</label>
+              <input type="text" [(ngModel)]="productoForm.codigoProducto" name="codigoProducto">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Precio *</label>
+              <input type="number" [(ngModel)]="productoForm.precio" name="precio" min="0" required>
+            </div>
+            
+            <div class="form-group">
+              <label>Unidad</label>
+              <select [(ngModel)]="productoForm.unidad" name="unidad">
+                <option value="kg">Kilogramo</option>
+                <option value="g">Gramo</option>
+                <option value="lb">Libra</option>
+                <option value="unidad">Unidad</option>
+                <option value="litro">Litro</option>
+                <option value="ml">Mililitro</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Descripción</label>
+            <input type="text" [(ngModel)]="productoForm.descripcion" name="descripcion">
+          </div>
+
+          <div class="form-group">
+            <label>Descripción Completa</label>
+            <textarea [(ngModel)]="productoForm.descripcionCompleta" name="descripcionCompleta" rows="3"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>URL de Imagen</label>
+            <input type="url" [(ngModel)]="productoForm.imagen" name="imagen">
+          </div>
+        </div>
+
+        <!-- Información del proveedor -->
+        <div class="form-section">
+          <h3>Proveedor y Stock</h3>
+          
+          <div class="form-group">
+            <label>Proveedor</label>
+            <input type="text" [(ngModel)]="productoForm.proveedor" name="proveedor">
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Stock</label>
+              <input type="number" [(ngModel)]="productoForm.stock" name="stock" min="0">
+            </div>
+            
+            <div class="form-group checkbox-group">
+              <label>
+                <input type="checkbox" [(ngModel)]="productoForm.disponible" name="disponible">
+                Disponible
+              </label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Origen</label>
+            <input type="text" [(ngModel)]="productoForm.origen" name="origen">
+          </div>
+
+          <div class="form-group">
+            <label>Composición</label>
+            <input type="text" [(ngModel)]="productoForm.composicion" name="composicion">
+          </div>
+
+          <div class="form-group">
+            <label>Presentación</label>
+            <input type="text" [(ngModel)]="productoForm.presentacion" name="presentacion">
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Peso Neto</label>
+              <input type="text" [(ngModel)]="productoForm.pesoNeto" name="pesoNeto">
+            </div>
+            
+            <div class="form-group">
+              <label>Fecha de Vencimiento</label>
+              <input type="date" [(ngModel)]="productoForm.fechaVencimiento" name="fechaVencimiento">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Temperatura de Almacenamiento</label>
+            <input type="text" [(ngModel)]="productoForm.temperaturaAlmacenamiento" name="temperaturaAlmacenamiento">
+          </div>
+        </div>
+      </div>
+
+      <!-- Secciones de arrays -->
+      <div class="arrays-section">
+        <!-- Certificaciones -->
+        <div class="array-group">
+          <h4>Certificaciones</h4>
+          <div class="array-input">
+            <input type="text" [(ngModel)]="nuevaCertificacion" name="nuevaCertificacion" placeholder="Agregar certificación">
+            <button type="button" class="btn btn-sm" (click)="agregarCertificacion()">Agregar</button>
+          </div>
+          <div class="tags">
+            <span class="tag" *ngFor="let cert of productoForm.certificacion; let i = index">
+              {{cert}}
+              <button type="button" (click)="eliminarCertificacion(i)">×</button>
+            </span>
+          </div>
+        </div>
+
+        <!-- Características -->
+        <div class="array-group">
+          <h4>Características</h4>
+          <div class="array-input">
+            <input type="text" [(ngModel)]="nuevaCaracteristica" name="nuevaCaracteristica" placeholder="Agregar característica">
+            <button type="button" class="btn btn-sm" (click)="agregarCaracteristica()">Agregar</button>
+          </div>
+          <div class="tags">
+            <span class="tag" *ngFor="let carac of productoForm.caracteristicas; let i = index">
+              {{carac}}
+              <button type="button" (click)="eliminarCaracteristica(i)">×</button>
+            </span>
+          </div>
+        </div>
+
+        <!-- Uso Recomendado -->
+        <div class="array-group">
+          <h4>Uso Recomendado</h4>
+          <div class="array-input">
+            <input type="text" [(ngModel)]="nuevoUsoRecomendado" name="nuevoUsoRecomendado" placeholder="Agregar uso recomendado">
+            <button type="button" class="btn btn-sm" (click)="agregarUsoRecomendado()">Agregar</button>
+          </div>
+          <div class="tags">
+            <span class="tag" *ngFor="let uso of productoForm.usoRecomendado; let i = index">
+              {{uso}}
+              <button type="button" (click)="eliminarUsoRecomendado(i)">×</button>
+            </span>
+          </div>
+        </div>
+
+        <!-- Instrucciones -->
+        <div class="array-group">
+          <h4>Instrucciones</h4>
+          <div class="array-input">
+            <input type="text" [(ngModel)]="nuevaInstruccion" name="nuevaInstruccion" placeholder="Agregar instrucción">
+            <button type="button" class="btn btn-sm" (click)="agregarInstruccion()">Agregar</button>
+          </div>
+          <div class="tags">
+            <span class="tag" *ngFor="let inst of productoForm.instrucciones; let i = index">
+              {{inst}}
+              <button type="button" (click)="eliminarInstruccion(i)">×</button>
+            </span>
+          </div>
+        </div>
+
+        <!-- Precauciones -->
+        <div class="array-group">
+          <h4>Precauciones</h4>
+          <div class="array-input">
+            <input type="text" [(ngModel)]="nuevaPrecaucion" name="nuevaPrecaucion" placeholder="Agregar precaución">
+            <button type="button" class="btn btn-sm" (click)="agregarPrecaucion()">Agregar</button>
+          </div>
+          <div class="tags">
+            <span class="tag" *ngFor="let prec of productoForm.precauciones; let i = index">
+              {{prec}}
+              <button type="button" (click)="eliminarPrecaucion(i)">×</button>
+            </span>
+          </div>
+        </div>
+
+        <!-- Beneficios -->
+        <div class="array-group">
+          <h4>Beneficios</h4>
+          <div class="array-input">
+            <input type="text" [(ngModel)]="nuevoBeneficio" name="nuevoBeneficio" placeholder="Agregar beneficio">
+            <button type="button" class="btn btn-sm" (click)="agregarBeneficio()">Agregar</button>
+          </div>
+          <div class="tags">
+            <span class="tag" *ngFor="let ben of productoForm.beneficios; let i = index">
+              {{ben}}
+              <button type="button" (click)="eliminarBeneficio(i)">×</button>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary" [disabled]="!validarFormulario()">
+          {{editando ? 'Actualizar' : 'Crear'}} Producto
+        </button>
+        <button type="button" class="btn btn-outline" (click)="cancelarFormulario()">Cancelar</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Modal de detalle -->
+  <div class="modal-overlay" *ngIf="mostrarDetalle" (click)="cerrarDetalle()">
+    <div class="modal-content" (click)="$event.stopPropagation()" *ngIf="productoSeleccionado">
+      <div class="modal-header">
+        <h2>{{productoSeleccionado.nombre}}</h2>
+        <button class="close-btn" (click)="cerrarDetalle()">×</button>
+      </div>
+      
+      <div class="modal-body">
+        <div class="detalle-grid">
+          <div class="detalle-imagen">
+            <img [src]="productoSeleccionado.imagen" [alt]="productoSeleccionado.nombre" 
+                 onerror="this.src='https://via.placeholder.com/400x300?text=Sin+Imagen'">
+          </div>
+          
+          <div class="detalle-info">
+            <div class="info-group">
+              <h4>Información General</h4>
+              <p><strong>Categoría:</strong> {{productoSeleccionado.categoria}}</p>
+              <p><strong>Precio:</strong> ${{productoSeleccionado.precio | number}} / {{productoSeleccionado.unidad}}</p>
+              <p><strong>Código:</strong> {{productoSeleccionado.codigoProducto}}</p>
+              <p><strong>Proveedor:</strong> {{productoSeleccionado.proveedor}}</p>
+              <p><strong>Origen:</strong> {{productoSeleccionado.origen}}</p>
+              <p><strong>Stock:</strong> {{productoSeleccionado.stock}} unidades</p>
+              <p><strong>Estado:</strong> 
+                <span [class]="productoSeleccionado.disponible ? 'disponible' : 'no-disponible'">
+                  {{productoSeleccionado.disponible ? 'Disponible' : 'No disponible'}}
+                </span>
+              </p>
+            </div>
+
+            <div class="info-group">
+              <h4>Descripción</h4>
+              <p>{{productoSeleccionado.descripcionCompleta}}</p>
+            </div>
+
+            <div class="info-group">
+              <h4>Especificaciones</h4>
+              <p><strong>Composición:</strong> {{productoSeleccionado.composicion}}</p>
+              <p><strong>Presentación:</strong> {{productoSeleccionado.presentacion}}</p>
+              <p><strong>Peso Neto:</strong> {{productoSeleccionado.pesoNeto}}</p>
+              <p><strong>Fecha de Vencimiento:</strong> {{productoSeleccionado.fechaVencimiento}}</p>
+              <p><strong>Temperatura de Almacenamiento:</strong> {{productoSeleccionado.temperaturaAlmacenamiento}}</p>
+            </div>
+
+            <div class="info-group" *ngIf="productoSeleccionado.certificacion.length > 0">
+              <h4>Certificaciones</h4>
+              <div class="tags">
+                <span class="tag" *ngFor="let cert of productoSeleccionado.certificacion">{{cert}}</span>
+              </div>
+            </div>
+
+            <div class="info-group" *ngIf="productoSeleccionado.caracteristicas.length > 0">
+              <h4>Características</h4>
+              <ul>
+                <li *ngFor="let carac of productoSeleccionado.caracteristicas">{{carac}}</li>
+              </ul>
+            </div>
+
+            <div class="info-group" *ngIf="productoSeleccionado.usoRecomendado.length > 0">
+              <h4>Uso Recomendado</h4>
+              <ul>
+                <li *ngFor="let uso of productoSeleccionado.usoRecomendado">{{uso}}</li>
+              </ul>
+            </div>
+
+            <div class="info-group" *ngIf="productoSeleccionado.beneficios.length > 0">
+              <h4>Beneficios</h4>
+              <ul>
+                <li *ngFor="let beneficio of productoSeleccionado.beneficios">{{beneficio}}</li>
+              </ul>
+            </div>
+
+            <div class="info-group" *ngIf="productoSeleccionado.instrucciones.length > 0">
+              <h4>Instrucciones</h4>
+              <ul>
+                <li *ngFor="let inst of productoSeleccionado.instrucciones">{{inst}}</li>
+              </ul>
+            </div>
+
+            <div class="info-group" *ngIf="productoSeleccionado.precauciones.length > 0">
+              <h4>Precauciones</h4>
+              <ul>
+                <li *ngFor="let prec of productoSeleccionado.precauciones">{{prec}}</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

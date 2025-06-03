@@ -1,0 +1,117 @@
+<div class="asesorias-container">
+  <!-- Navegación entre secciones -->
+  <div class="seccion-nav">
+    <button 
+      class="nav-btn" 
+      [class.active]="seccionActiva === 'disponibles'"
+      (click)="cambiarSeccion('disponibles')">
+      Asesorías Disponibles
+    </button>
+    <button 
+      class="nav-btn" 
+      [class.active]="seccionActiva === 'mis-asesorias'"
+      (click)="cambiarSeccion('mis-asesorias')">
+      Mis Asesorías
+      <span class="badge" *ngIf="misAsesorias.length > 0">{{misAsesorias.length}}</span>
+    </button>
+  </div>
+
+  <!-- Sección: Asesorías Disponibles -->
+  <div class="seccion-content" *ngIf="seccionActiva === 'disponibles'">
+    <div class="seccion-header">
+      <h2>Expertos Agrícolas Disponibles</h2>
+      <p>Conecta con especialistas para obtener asesoría personalizada</p>
+    </div>
+
+    <div class="expertos-grid">
+      <div class="experto-card" *ngFor="let experto of expertosDisponibles">
+        <div class="experto-header">
+          <img [src]="experto.imagen" [alt]="experto.nombre" class="experto-avatar">
+          <div class="experto-info">
+            <h3>{{experto.nombre}}</h3>
+            <p class="especialidad">{{experto.especialidad}}</p>
+            <div class="calificacion">
+              <div class="estrellas">
+                <span *ngFor="let star of [1,2,3,4,5]" 
+                      class="estrella" 
+                      [class.filled]="star <= experto.calificacion">
+                  ★
+                </span>
+              </div>
+              <span class="rating-number">({{experto.calificacion}})</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="experto-body">
+          <p class="experiencia">{{experto.experiencia}}</p>
+          <p class="descripcion">{{experto.descripcion}}</p>
+        </div>
+
+        <div class="experto-footer">
+          <button class="btn-solicitar" (click)="solicitarAsesoria(experto)">
+            Solicitar Asesoría
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sección: Mis Asesorías -->
+  <div class="seccion-content" *ngIf="seccionActiva === 'mis-asesorias'">
+    <div class="seccion-header">
+      <h2>Mis Solicitudes de Asesoría</h2>
+      <p>Revisa el estado de tus solicitudes</p>
+    </div>
+
+    <div class="asesorias-lista" *ngIf="misAsesorias.length > 0; else noAsesorias">
+      <div class="asesoria-item" *ngFor="let asesoria of misAsesorias">
+        <div class="asesoria-header">
+          <div class="asesoria-info">
+            <h4>{{asesoria.expertoNombre}}</h4>
+            <p class="especialidad">{{asesoria.especialidad}}</p>
+            <p class="fecha">Solicitada: {{asesoria.fechaSolicitud | date:'dd/MM/yyyy HH:mm'}}</p>
+          </div>
+          <div class="estado-badge" [ngClass]="getEstadoClase(asesoria.estado)">
+            {{getEstadoTexto(asesoria.estado)}}
+          </div>
+        </div>
+
+        <!-- Información de contacto si está aceptada -->
+        <div class="contacto-info" *ngIf="asesoria.estado === 'aceptada' && asesoria.contacto">
+          <h5>Contáctame aquí:</h5>
+          <div class="contacto-detalles">
+            <div class="contacto-item">
+              <span class="icon">📧</span>
+              <span class="contacto-text">{{asesoria.contacto.email}}</span>
+            </div>
+            <div class="contacto-item">
+              <span class="icon">📱</span>
+              <span class="contacto-text">{{asesoria.contacto.telefono}}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mensaje para estados pendiente o rechazada -->
+        <div class="estado-mensaje" *ngIf="asesoria.estado === 'pendiente'">
+          <p>⏳ Tu solicitud está siendo revisada por el experto...</p>
+        </div>
+        
+        <div class="estado-mensaje" *ngIf="asesoria.estado === 'rechazada'">
+          <p>❌ Lo sentimos, el experto no puede atender tu solicitud en este momento.</p>
+        </div>
+      </div>
+    </div>
+
+    <ng-template #noAsesorias>
+      <div class="empty-state">
+        <div class="empty-icon">🌱</div>
+        <h3>No tienes asesorías solicitadas aún</h3>
+        <p>Explora nuestros expertos disponibles y solicita tu primera asesoría</p>
+        <button class="btn-explorar" (click)="cambiarSeccion('disponibles')">
+          Ver Expertos Disponibles
+        </button>
+      </div>
+    </ng-template>
+  </div>
+</div>

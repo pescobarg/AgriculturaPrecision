@@ -1,0 +1,170 @@
+<div class="buscar-container">
+  <!-- Header con buscador y botón carrito -->
+<div class="header-section">
+  <div class="search-bar">
+    <input 
+      type="text" 
+      [(ngModel)]="terminoBusqueda" 
+      placeholder="Buscar productos agrícolas..."
+      class="search-input">
+    <i class="search-icon">🔍</i>
+  </div>
+
+  <div style="display: flex; gap: 10px;">
+    <button class="cart-button" (click)="irAlCarrito()">
+      <i class="cart-icon">🛒</i>
+      Ir al Carrito
+    </button>
+
+    <button class="cart-button" (click)="verMisPedidos()">
+      <i class="cart-icon">📦</i>
+      Ver mis pedidos
+    </button>
+  </div>
+</div>
+
+  <div class="main-content">
+    <!-- Panel de Filtros (Izquierda) -->
+    <div class="filters-panel">
+      <div class="filters-header">
+        <h3>Filtros</h3>
+        <button class="clear-filters-btn" (click)="limpiarFiltros()">Limpiar</button>
+      </div>
+
+      <!-- Filtro por categoría -->
+      <div class="filter-group">
+        <label class="filter-label">Categoría</label>
+        <select [(ngModel)]="filtroCategoria" class="filter-select">
+          <option value="">Todas las categorías</option>
+          <option *ngFor="let categoria of categorias" [value]="categoria">
+            {{ categoria }}
+          </option>
+        </select>
+      </div>
+
+      <!-- Filtro por proveedor -->
+      <div class="filter-group">
+        <label class="filter-label">Proveedor</label>
+        <select [(ngModel)]="filtroProveedor" class="filter-select">
+          <option value="">Todos los proveedores</option>
+          <option *ngFor="let proveedor of proveedores" [value]="proveedor">
+            {{ proveedor }}
+          </option>
+        </select>
+      </div>
+
+      <!-- Filtro por rango de precio -->
+      <div class="filter-group">
+        <label class="filter-label">Rango de Precio</label>
+        <div class="price-range">
+          <div class="price-input-group">
+            <label>Mín:</label>
+            <input 
+              type="number" 
+              [(ngModel)]="filtroPrecioMin" 
+              min="0" 
+              class="price-input">
+          </div>
+          <div class="price-input-group">
+            <label>Máx:</label>
+            <input 
+              type="number" 
+              [(ngModel)]="filtroPrecioMax" 
+              min="0" 
+              class="price-input">
+          </div>
+        </div>
+      </div>
+
+      <!-- Filtro por origen -->
+      <div class="filter-group">
+        <label class="filter-label">Origen</label>
+        <select [(ngModel)]="filtroOrigen" class="filter-select">
+          <option value="">Cualquier origen</option>
+          <option *ngFor="let origen of origenes" [value]="origen">
+            {{ origen }}
+          </option>
+        </select>
+      </div>
+
+      <!-- Filtro por certificación -->
+      <div class="filter-group">
+        <label class="filter-label">Certificación</label>
+        <select [(ngModel)]="filtroCertificacion" class="filter-select">
+          <option value="">Cualquier certificación</option>
+          <option *ngFor="let cert of certificaciones" [value]="cert">
+            {{ cert }}
+          </option>
+        </select>
+      </div>
+
+      <!-- Filtro por disponibilidad -->
+      <div class="filter-group">
+        <label class="filter-checkbox">
+          <input 
+            type="checkbox" 
+            [(ngModel)]="filtroDisponible">
+          <span class="checkmark"></span>
+          Solo productos disponibles
+        </label>
+      </div>
+    </div>
+
+    <!-- Catálogo de Productos (Derecha) -->
+    <div class="products-section">
+      <div class="products-header">
+        <h2>Catálogo de Productos</h2>
+        <span class="results-count">{{ productosFiltrados.length }} productos encontrados</span>
+      </div>
+
+      <div class="products-grid" *ngIf="productosFiltrados.length > 0; else noProducts">
+        <div *ngFor="let producto of productosFiltrados" class="product-card">
+          <div class="product-image">
+            <img [src]="producto.imagen" [alt]="producto.nombre" />
+            <div class="availability-badge" [ngClass]="{'available': producto.disponible, 'unavailable': !producto.disponible}">
+              {{ producto.disponible ? 'Disponible' : 'Agotado' }}
+            </div>
+          </div>
+          
+          <div class="product-info">
+            <h3 class="product-name">{{ producto.nombre }}</h3>
+            <p class="product-description">{{ producto.descripcion }}</p>
+            
+            <div class="product-details">
+              <span class="product-category">{{ producto.categoria }}</span>
+              <span class="product-provider">{{ producto.proveedor }}</span>
+            </div>
+            
+            <div class="product-certifications">
+              <span *ngFor="let cert of producto.certificacion" class="cert-badge">
+                {{ cert }}
+              </span>
+            </div>
+            
+            <div class="product-footer">
+              <div class="price-section">
+                <span class="price">${{ producto.precio }}</span>
+                <span class="unit">/ {{ producto.unidad }}</span>
+              </div>
+              
+              <button 
+                class="details-button" 
+                (click)="verDetalles(producto)"
+                [disabled]="!producto.disponible">
+                Ver Detalles
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <ng-template #noProducts>
+        <div class="no-products">
+          <div class="no-products-icon">📦</div>
+          <h3>No se encontraron productos</h3>
+          <p>Intenta ajustar los filtros o el término de búsqueda</p>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</div>

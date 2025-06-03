@@ -1,0 +1,214 @@
+<div class="detalles-container">
+  <!-- Header de navegación -->
+<!-- Header de navegación -->
+<div class="navigation-header">
+  <button class="back-button" (click)="volverAlCatalogo()">
+    ← Volver al Catálogo
+  </button>
+
+  <div style="display: flex; gap: 10px;">
+    <button class="cart-button" (click)="irAlCarrito()">
+      🛒 Ver Carrito
+    </button>
+
+    <button class="cart-button" (click)="verMisPedidos()">
+      📦 Ver mis pedidos
+    </button>
+  </div>
+</div>
+
+
+  <!-- Sección principal del producto -->
+  <div class="product-main-section">
+    <!-- Imagen del producto -->
+    <div class="product-image-section">
+      <div class="main-image">
+        <img [src]="producto.imagen" [alt]="producto.nombre" />
+        <div class="availability-badge" [ngClass]="{'available': producto.disponible, 'unavailable': !producto.disponible}">
+          {{ producto.disponible ? 'Disponible' : 'Agotado' }}
+        </div>
+      </div>
+    </div>
+
+    <!-- Información principal -->
+    <div class="product-info-section">
+      <div class="product-header">
+        <span class="product-category">{{ producto.categoria }}</span>
+        <h1 class="product-title">{{ producto.nombre }}</h1>
+        <p class="product-provider">por {{ producto.proveedor }}</p>
+      </div>
+
+      <div class="certifications-section">
+        <span *ngFor="let cert of producto.certificacion" class="cert-badge">
+          {{ cert }}
+        </span>
+      </div>
+
+      <div class="product-description">
+        <p>{{ producto.descripcionCompleta }}</p>
+      </div>
+
+      <div class="product-specs">
+        <div class="spec-item">
+          <span class="spec-label">Código:</span>
+          <span class="spec-value">{{ producto.codigoProducto }}</span>
+        </div>
+        <div class="spec-item">
+          <span class="spec-label">Origen:</span>
+          <span class="spec-value">{{ producto.origen }}</span>
+        </div>
+        <div class="spec-item">
+          <span class="spec-label">Stock:</span>
+          <span class="spec-value">{{ producto.stock }} unidades</span>
+        </div>
+        <div class="spec-item">
+          <span class="spec-label">Presentación:</span>
+          <span class="spec-value">{{ producto.presentacion }}</span>
+        </div>
+      </div>
+
+      <!-- Sección de compra -->
+      <div class="purchase-section">
+        <div class="price-section">
+          <span class="current-price">${{ producto.precio }}</span>
+          <span class="price-unit">/ {{ producto.unidad }}</span>
+        </div>
+
+        <div class="quantity-section">
+          <label class="quantity-label">Cantidad:</label>
+          <div class="quantity-controls">
+            <button class="quantity-btn" (click)="disminuirCantidad()" [disabled]="cantidad <= 1">-</button>
+            <input type="number" [(ngModel)]="cantidad" [min]="1" [max]="producto.stock" class="quantity-input">
+            <button class="quantity-btn" (click)="aumentarCantidad()" [disabled]="cantidad >= producto.stock">+</button>
+          </div>
+          <span class="stock-info">{{ producto.stock }} disponibles</span>
+        </div>
+
+        <div class="total-section">
+          <span class="total-label">Total:</span>
+          <span class="total-price">${{ precioTotal.toFixed(2) }}</span>
+        </div>
+
+        <button 
+          class="add-to-cart-btn" 
+          (click)="agregarAlCarrito()"
+          [disabled]="!producto.disponible">
+          🛒 Agregar al Carrito
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tabs de información detallada -->
+  <div class="details-tabs-section">
+    <div class="tabs-navigation">
+      <button 
+        class="tab-button" 
+        [class.active]="tabActiva === 'descripcion'"
+        (click)="seleccionarTab('descripcion')">
+        Descripción
+      </button>
+      <button 
+        class="tab-button" 
+        [class.active]="tabActiva === 'caracteristicas'"
+        (click)="seleccionarTab('caracteristicas')">
+        Características
+      </button>
+      <button 
+        class="tab-button" 
+        [class.active]="tabActiva === 'uso'"
+        (click)="seleccionarTab('uso')">
+        Uso Recomendado
+      </button>
+      <button 
+        class="tab-button" 
+        [class.active]="tabActiva === 'instrucciones'"
+        (click)="seleccionarTab('instrucciones')">
+        Instrucciones
+      </button>
+      <button 
+        class="tab-button" 
+        [class.active]="tabActiva === 'beneficios'"
+        (click)="seleccionarTab('beneficios')">
+        Beneficios
+      </button>
+    </div>
+
+    <div class="tab-content">
+      <!-- Tab Descripción -->
+      <div *ngIf="tabActiva === 'descripcion'" class="tab-panel">
+        <h3>Información del Producto</h3>
+        <p class="detailed-description">{{ producto.descripcionCompleta }}</p>
+        
+        <div class="product-details-grid">
+          <div class="detail-item">
+            <strong>Composición:</strong>
+            <p>{{ producto.composicion }}</p>
+          </div>
+          <div class="detail-item">
+            <strong>Peso Neto:</strong>
+            <p>{{ producto.pesoNeto }}</p>
+          </div>
+          <div class="detail-item">
+            <strong>Fecha de Vencimiento:</strong>
+            <p>{{ producto.fechaVencimiento }}</p>
+          </div>
+          <div class="detail-item">
+            <strong>Temperatura de Almacenamiento:</strong>
+            <p>{{ producto.temperaturaAlmacenamiento }}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab Características -->
+      <div *ngIf="tabActiva === 'caracteristicas'" class="tab-panel">
+        <h3>Características Técnicas</h3>
+        <ul class="features-list">
+          <li *ngFor="let caracteristica of producto.caracteristicas">
+            {{ caracteristica }}
+          </li>
+        </ul>
+      </div>
+
+      <!-- Tab Uso Recomendado -->
+      <div *ngIf="tabActiva === 'uso'" class="tab-panel">
+        <h3>Recomendaciones de Uso</h3>
+        <ol class="usage-list">
+          <li *ngFor="let uso of producto.usoRecomendado">
+            {{ uso }}
+          </li>
+        </ol>
+      </div>
+
+      <!-- Tab Instrucciones -->
+      <div *ngIf="tabActiva === 'instrucciones'" class="tab-panel">
+        <h3>Instrucciones de Aplicación</h3>
+        <ol class="instructions-list">
+          <li *ngFor="let instruccion of producto.instrucciones">
+            {{ instruccion }}
+          </li>
+        </ol>
+        
+        <div class="precautions-section">
+          <h4>⚠️ Precauciones</h4>
+          <ul class="precautions-list">
+            <li *ngFor="let precaucion of producto.precauciones">
+              {{ precaucion }}
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Tab Beneficios -->
+      <div *ngIf="tabActiva === 'beneficios'" class="tab-panel">
+        <h3>Beneficios del Producto</h3>
+        <div class="benefits-grid">
+          <div *ngFor="let beneficio of producto.beneficios" class="benefit-item">
+            <span class="benefit-icon">✓</span>
+            <span class="benefit-text">{{ beneficio }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

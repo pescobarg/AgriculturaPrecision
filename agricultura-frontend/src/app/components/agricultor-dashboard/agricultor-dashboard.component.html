@@ -1,1 +1,128 @@
-<p>agricultor-dashboard works!</p>
+<!-- agricultor-dashboard.component.html -->
+<div class="dashboard-container">
+  <!-- Header Section -->
+  <header class="dashboard-header">
+    <div class="header-content">
+      <div class="welcome-section">
+        <h1 class="welcome-title">¡Bienvenido a tu Dashboard Agrícola!</h1>
+        <p class="welcome-subtitle">Gestiona tu finca de manera inteligente</p>
+      </div>
+      <div class="farmer-icon">
+        <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 2L2 7v10c0 5.55 3.84 10 9 11 1.16.21 2.76.21 3.91 0C20.16 27 24 22.55 24 17V7l-10-5z"/>
+          <path d="M12 8v8m-4-4h8"/>
+        </svg>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Dashboard Cards -->
+  <main class="dashboard-main">
+    <div class="cards-grid">
+      
+      <!-- Sensores Card -->
+      <div class="dashboard-card sensors-card" (click)="navigateToSensors()">
+        <div class="card-icon">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M12 1v6m0 6v6"/>
+            <path d="m21 12-6-3-6 3-6-3"/>
+          </svg>
+        </div>
+        <div class="card-content">
+          <h3 class="card-title">Revisar Sensores</h3>
+          <p class="card-description">Monitorea temperatura, humedad y condiciones del suelo en tiempo real</p>
+        </div>
+        <div class="card-arrow">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="9,18 15,12 9,6"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Productos Card -->
+      <div class="dashboard-card products-card" (click)="navigateToProducts()">
+        <div class="card-icon">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/>
+            <polyline points="3.29,7 12,12 20.71,7"/>
+            <line x1="12" y1="22" x2="12" y2="12"/>
+          </svg>
+        </div>
+        <div class="card-content">
+          <h3 class="card-title">Buscar Productos</h3>
+          <p class="card-description">Encuentra semillas, fertilizantes y herramientas para tu cultivo</p>
+        </div>
+        <div class="card-arrow">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="9,18 15,12 9,6"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Blog Card -->
+      <div class="dashboard-card blog-card" (click)="navigateToBlog()">
+        <div class="card-icon">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14,2 14,8 20,8"/>
+            <line x1="16" y1="13" x2="8" y2="13"/>
+            <line x1="16" y1="17" x2="8" y2="17"/>
+            <polyline points="10,9 9,9 8,9"/>
+          </svg>
+        </div>
+        <div class="card-content">
+          <h3 class="card-title">Opiniones y Blog</h3>
+          <p class="card-description">Lee experiencias de otros agricultores y comparte las tuyas</p>
+        </div>
+        <div class="card-arrow">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="9,18 15,12 9,6"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Asesorías Card -->
+      <div class="dashboard-card advisory-card" (click)="navigateToAdvisory()">
+        <div class="card-icon">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+        </div>
+        <div class="card-content">
+          <h3 class="card-title">Asesoría Personalizada</h3>
+          <p class="card-description">Consulta con expertos agrícolas para optimizar tu producción</p>
+        </div>
+        <div class="card-arrow">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="9,18 15,12 9,6"/>
+          </svg>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer Stats -->
+  <footer class="dashboard-footer">
+    <div class="stats-container">
+      <div class="stat-item">
+        <span class="stat-number">24/7</span>
+        <span class="stat-label">Monitoreo</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-number">100+</span>
+        <span class="stat-label">Productos</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-number">Expert</span>
+        <span class="stat-label">Asesoría</span>
+      </div>
+    </div>
+  </footer>
+</div>

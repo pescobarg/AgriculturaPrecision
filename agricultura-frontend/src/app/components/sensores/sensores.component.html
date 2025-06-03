@@ -1,0 +1,177 @@
+
+<!-- Header -->
+<div class="header">
+  <div class="header-content">
+    <h1>🌱 Monitoreo de Sensores</h1>
+    <div class="header-actions">
+      <button class="btn btn-primary" (click)="openAddSensorModal()">
+        + Agregar Sensor
+      </button>
+      <button class="btn btn-secondary" (click)="generateReport()">
+        📊 Generar Reporte
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Dashboard Stats -->
+<div class="stats-container">
+  <div class="stat-card">
+    <div class="stat-icon">📊</div>
+    <div class="stat-content">
+      <div class="stat-number">{{ activeSensorsCount }}</div>
+      <div class="stat-label">Sensores Activos</div>
+    </div>
+  </div>
+  
+  <div class="stat-card warning">
+    <div class="stat-icon">⚠️</div>
+    <div class="stat-content">
+      <div class="stat-number">{{ warningAlertsCount }}</div>
+      <div class="stat-label">Advertencias</div>
+    </div>
+  </div>
+  
+  <div class="stat-card critical">
+    <div class="stat-icon">🚨</div>
+    <div class="stat-content">
+      <div class="stat-number">{{ criticalAlertsCount }}</div>
+      <div class="stat-label">Críticas</div>
+    </div>
+  </div>
+  
+  <div class="stat-card normal">
+    <div class="stat-icon">✅</div>
+    <div class="stat-content">
+      <div class="stat-number">{{ normalSensorsCount }}</div>
+      <div class="stat-label">Normales</div>
+    </div>
+  </div>
+</div>
+
+<!-- Alerts Section -->
+<div class="alerts-container" *ngIf="alerts.length > 0">
+  <h2>🚨 Alertas Recientes</h2>
+  <div class="alerts-list">
+    <div 
+      *ngFor="let alert of recentAlerts" 
+      class="alert-item"
+      [class.acknowledged]="alert.acknowledged"
+      [class.warning]="alert.severity === 'warning'"
+      [class.error]="alert.severity === 'error'">
+      
+      <div class="alert-icon">{{ getSeverityIcon(alert.severity) }}</div>
+      <div class="alert-content">
+        <div class="alert-message">{{ alert.message }}</div>
+        <div class="alert-time">{{ alert.timestamp | date:'short':'es-ES' }}</div>
+      </div>
+      <button 
+        *ngIf="!alert.acknowledged"
+        class="btn btn-sm"
+        (click)="acknowledgeAlert(alert.id)">
+        Reconocer
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Sensors Grid -->
+<div class="sensors-grid">
+  <div *ngFor="let sensor of sensors" class="sensor-card" [class]="sensor.status">
+    <div class="sensor-header">
+      <div class="sensor-title">
+        <h3>{{ sensor.name }}</h3>
+        <span class="sensor-type">{{ sensor.type }}</span>
+      </div>
+      <div class="sensor-actions">
+        <span class="sensor-status">{{ getStatusIcon(sensor.status) }}</span>
+        <button class="btn-delete" (click)="deleteSensor(sensor.id)" title="Eliminar sensor">
+          🗑️
+        </button>
+      </div>
+    </div>
+    
+    <div class="sensor-value">
+      <div class="current-value">
+        <span class="value">{{ sensor.value }}</span>
+        <span class="unit">{{ sensor.unit }}</span>
+      </div>
+      <div class="last-update">
+        Actualizado: {{ sensor.lastUpdate | date:'short':'es-ES' }}
+      </div>
+    </div>
+    
+    <div class="sensor-thresholds" *ngIf="sensor.minThreshold && sensor.maxThreshold">
+      <div class="threshold">
+        <span class="threshold-label">Rango:</span>
+        <span class="threshold-range">
+          {{ sensor.minThreshold }} - {{ sensor.maxThreshold }} {{ sensor.unit }}
+        </span>
+      </div>
+    </div>
+    
+    <div class="sensor-chart">
+      <canvas 
+        [id]="'chart-' + sensor.id"
+        width="300" 
+        height="150">
+      </canvas>
+    </div>
+  </div>
+</div>
+
+<!-- Add Sensor Modal -->
+<div class="modal-overlay" *ngIf="showAddSensorModal" (click)="closeAddSensorModal()">
+  <div class="modal" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h2>Agregar Nuevo Sensor</h2>
+      <button class="btn-close" (click)="closeAddSensorModal()">×</button>
+    </div>
+    
+    <div class="modal-body">
+      <div class="form-group">
+        <label for="sensorName">Nombre del Sensor:</label>
+        <input 
+          type="text" 
+          id="sensorName"
+          [(ngModel)]="newSensorName"
+          placeholder="Ej: Sensor Temperatura Invernadero 1"
+          class="form-control">
+      </div>
+      
+      <div class="form-group">
+        <label for="sensorType">Tipo de Sensor:</label>
+        <select 
+          id="sensorType"
+          [(ngModel)]="newSensorType"
+          class="form-control">
+          <option *ngFor="let type of sensorTypes" [value]="type">
+            {{ type }}
+          </option>
+        </select>
+      </div>
+    </div>
+    
+    <div class="modal-footer">
+      <button class="btn btn-secondary" (click)="closeAddSensorModal()">
+        Cancelar
+      </button>
+      <button 
+        class="btn btn-primary" 
+        (click)="addSensor()"
+        [disabled]="!newSensorName.trim()">
+        Agregar Sensor
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Empty State -->
+<div class="empty-state" *ngIf="sensors.length === 0">
+  <div class="empty-icon">🌾</div>
+  <h2>No hay sensores configurados</h2>
+  <p>Agrega tu primer sensor para comenzar a monitorear tu cultivo.</p>
+  <button class="btn btn-primary" (click)="openAddSensorModal()">
+    + Agregar Primer Sensor
+  </button>
+</div>

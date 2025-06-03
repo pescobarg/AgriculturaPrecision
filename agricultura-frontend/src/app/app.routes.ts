@@ -6,6 +6,16 @@ import { ProveedorDashboardComponent } from './components/proveedor-dashboard/pr
 import { ExpertoDashboardComponent } from './components/experto-dashboard/experto-dashboard.component';
 import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
 import { AgricultorDashboardComponent } from './components/agricultor-dashboard/agricultor-dashboard.component';
+import { SensoresComponent } from './components/sensores/sensores.component';
+import { BuscarComponent } from './components/buscar/buscar.component';
+import { AsesoriasComponent } from './components/asesorias/asesorias.component';
+import { BlogComponent } from './components/blog/blog.component';
+import { CarritoComponent } from './components/carrito/carrito.component';
+import { DetallesProductoComponent } from './components/detalles-producto/detalles-producto.component';
+import { PedidosComponent } from './components/pedidos/pedidos.component';
+import { ProductosComponent } from './components/productos/productos.component';
+import { CitasComponent } from './components/citas/citas.component';
+import { PanelComponent } from './components/panel/panel.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -15,5 +25,15 @@ export const routes: Routes = [
   { path: 'proveedor-dashboard', component: ProveedorDashboardComponent },
   { path: 'experto-dashboard', component: ExpertoDashboardComponent },
   { path: 'admin-dashboard', component: AdminDashboardComponent },
-  { path: 'agricultor-dashboard', component: AgricultorDashboardComponent }
+  { path: 'agricultor-dashboard', component: AgricultorDashboardComponent },
+  { path: 'sensores', component: SensoresComponent },
+  { path: 'buscar', component: BuscarComponent },
+  { path: 'blog', component: BlogComponent },
+  { path: 'asesorias', component: AsesoriasComponent },
+  { path: 'carrito', component: CarritoComponent },
+  { path: 'detalles-producto', component: DetallesProductoComponent },
+  { path: 'pedidos', component: PedidosComponent },
+  { path: 'productos', component: ProductosComponent },
+  { path: 'citas', component: CitasComponent },
+  { path: 'panel', component: PanelComponent }
 ];

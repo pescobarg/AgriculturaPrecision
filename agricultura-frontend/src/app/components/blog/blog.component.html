@@ -1,0 +1,108 @@
+<div class="blog-container">
+  <!-- Header del Blog -->
+  <header class="blog-header">
+    <h1>🌱 Huerto Comunitario</h1>
+    <p>Comparte tus conocimientos y resuelve dudas sobre cultivos agrícolas</p>
+    <button class="btn-new-post" (click)="toggleNewPostForm()">
+      {{ showNewPostForm ? 'Cancelar' : '+ Nueva Publicación' }}
+    </button>
+  </header>
+
+  <!-- Formulario para nueva publicación -->
+  <div class="new-post-form" *ngIf="showNewPostForm">
+    <h3>Crear Nueva Publicación</h3>
+    <form (ngSubmit)="createPost()">
+      <div class="form-group">
+        <label for="title">Título:</label>
+        <input type="text" id="title" [(ngModel)]="newPost.title" name="title" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="author">Tu nombre:</label>
+        <input type="text" id="author" [(ngModel)]="newPost.author" name="author" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="category">Tipo:</label>
+        <select id="category" [(ngModel)]="newPost.category" name="category">
+          <option value="recommendation">Recomendación</option>
+          <option value="question">Pregunta</option>
+        </select>
+      </div>
+      
+      <div class="form-group">
+        <label for="content">Contenido:</label>
+        <textarea id="content" [(ngModel)]="newPost.content" name="content" rows="4" required></textarea>
+      </div>
+      
+      <div class="form-actions">
+        <button type="submit" class="btn-submit">Publicar</button>
+        <button type="button" class="btn-cancel" (click)="toggleNewPostForm()">Cancelar</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Lista de publicaciones -->
+  <div class="posts-container">
+    <article class="post" *ngFor="let post of posts">
+      <!-- Header del post -->
+      <div class="post-header">
+        <div class="post-meta">
+          <span class="post-category" [ngClass]="getCategoryClass(post.category)">
+            {{ getCategoryLabel(post.category) }}
+          </span>
+          <span class="post-date">{{ post.date | date:'dd/MM/yyyy' }}</span>
+        </div>
+        <h2 class="post-title">{{ post.title }}</h2>
+        <p class="post-author">Por: {{ post.author }}</p>
+      </div>
+
+      <!-- Contenido del post -->
+      <div class="post-content">
+        <p>{{ post.content }}</p>
+      </div>
+
+      <!-- Sección de comentarios -->
+      <div class="comments-section">
+        <div class="comments-header">
+          <h4>Comentarios ({{ post.comments.length }})</h4>
+          <button class="btn-comment" (click)="toggleCommentForm(post.id)">
+            {{ showCommentForm[post.id] ? 'Cancelar' : '💬 Comentar' }}
+          </button>
+        </div>
+
+        <!-- Formulario de comentario -->
+        <div class="comment-form" *ngIf="showCommentForm[post.id]">
+          <form (ngSubmit)="addComment(post.id)">
+            <div class="form-group">
+              <input type="text" [(ngModel)]="newComment.author" name="commentAuthor" 
+                     placeholder="Tu nombre" required>
+            </div>
+            <div class="form-group">
+              <textarea [(ngModel)]="newComment.content" name="commentContent" 
+                        placeholder="Escribe tu comentario..." rows="3" required></textarea>
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn-submit-comment">Comentar</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Lista de comentarios -->
+        <div class="comments-list" *ngIf="post.comments.length > 0">
+          <div class="comment" *ngFor="let comment of post.comments">
+            <div class="comment-header">
+              <strong class="comment-author">{{ comment.author }}</strong>
+              <span class="comment-date">{{ comment.date | date:'dd/MM/yyyy HH:mm' }}</span>
+            </div>
+            <p class="comment-content">{{ comment.content }}</p>
+          </div>
+        </div>
+
+        <div class="no-comments" *ngIf="post.comments.length === 0">
+          <p>No hay comentarios aún. ¡Sé el primero en comentar!</p>
+        </div>
+      </div>
+    </article>
+  </div>
+</div>

@@ -1,11 +1,12 @@
 {
   "Version": 1,
-  "Hash": "At+vYxPPZhnL5WSso3Ts/X9DgH/jNCC6j5I1LRpBu2I=",
+  "Hash": "D0CXC2eZhLegj/aZP9D84lqyxHSirQ3KVKinHpJ/NpE=",
   "Source": "AgriculturaAuth.API",
   "BasePath": "_content/AgriculturaAuth.API",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
   "DiscoveryPatterns": [],
-  "Assets": []
+  "Assets": [],
+  "Endpoints": []
 }

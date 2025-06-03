@@ -1,1 +1,127 @@
-<p>admin-dashboard works!</p>
+<!-- admin-dashboard.component.html -->
+<div class="dashboard-container">
+  <!-- Header Section -->
+  <header class="dashboard-header">
+    <div class="header-content">
+      <div class="welcome-section">
+        <h1 class="welcome-title">¡Bienvenido a tu Panel de Administrador!</h1>
+        <p class="welcome-subtitle">Gestiona y supervisa la plataforma</p>
+      </div>
+      <div class="admin-icon">
+        <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+        </svg>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Dashboard Cards -->
+  <main class="dashboard-main">
+    <div class="cards-grid">
+      
+      <!-- Panel de Control Card -->
+      <div class="dashboard-card panel-card" (click)="navigateToPanel()">
+        <div class="card-icon">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+            <path d="M9 9h6v6H9z"/>
+            <path d="M9 1v4M15 1v4M9 19v4M15 19v4M1 9h4M1 15h4M19 9h4M19 15h4"/>
+          </svg>
+        </div>
+        <div class="card-content">
+          <h3 class="card-title">Panel de Control</h3>
+          <p class="card-description">Accede al panel principal de administración y control del sistema</p>
+        </div>
+        <div class="card-arrow">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="9,18 15,12 9,6"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Blog Administración Card -->
+      <div class="dashboard-card blog-card" (click)="navigateToBlog()">
+        <div class="card-icon">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14,2 14,8 20,8"/>
+            <line x1="16" y1="13" x2="8" y2="13"/>
+            <line x1="16" y1="17" x2="8" y2="17"/>
+            <polyline points="10,9 9,9 8,9"/>
+          </svg>
+        </div>
+        <div class="card-content">
+          <h3 class="card-title">Gestión de Blog</h3>
+          <p class="card-description">Administra publicaciones, comentarios y contenido del blog</p>
+        </div>
+        <div class="card-arrow">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="9,18 15,12 9,6"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Asesorías Administración Card -->
+      <div class="dashboard-card advisory-card" (click)="navigateToAdvisory()">
+        <div class="card-icon">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+        </div>
+        <div class="card-content">
+          <h3 class="card-title">Gestión de Asesorías</h3>
+          <p class="card-description">Supervisa y administra las asesorías y consultas de expertos</p>
+        </div>
+        <div class="card-arrow">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="9,18 15,12 9,6"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Búsqueda y Productos Card -->
+      <div class="dashboard-card search-card" (click)="navigateToSearch()">
+        <div class="card-icon">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"/>
+            <path d="m21 21-4.35-4.35"/>
+            <path d="M11 6v10M6 11h10"/>
+          </svg>
+        </div>
+        <div class="card-content">
+          <h3 class="card-title">Gestión de Búsquedas</h3>
+          <p class="card-description">Administra productos, categorías y opciones de búsqueda</p>
+        </div>
+        <div class="card-arrow">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="9,18 15,12 9,6"/>
+          </svg>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer Stats -->
+  <footer class="dashboard-footer">
+    <div class="stats-container">
+      <div class="stat-item">
+        <span class="stat-number">Admin</span>
+        <span class="stat-label">Control</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-number">Total</span>
+        <span class="stat-label">Gestión</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-number">24/7</span>
+        <span class="stat-label">Supervisión</span>
+      </div>
+    </div>
+  </footer>
+</div>

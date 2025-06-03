@@ -1,0 +1,118 @@
+<div class="citas-container">
+  <div class="header">
+    <h1>Gestión de Asesorías</h1>
+    <p>Administra las solicitudes de asesoría y tus citas programadas</p>
+  </div>
+
+  <!-- Navegación por pestañas -->
+  <div class="tabs-container">
+    <button 
+      class="tab-button" 
+      [class.active]="activeTab === 'solicitudes'"
+      (click)="setActiveTab('solicitudes')">
+      <i class="icon-inbox"></i>
+      Peticiones de Asesorías
+      <span class="badge">{{ solicitudesPendientes.length }}</span>
+    </button>
+    <button 
+      class="tab-button" 
+      [class.active]="activeTab === 'asesorias'"
+      (click)="setActiveTab('asesorias')">
+      <i class="icon-calendar"></i>
+      Mis Asesorías
+      <span class="badge">{{ misAsesorias.length }}</span>
+    </button>
+  </div>
+
+  <!-- Contenido de Peticiones de Asesorías -->
+  <div class="tab-content" *ngIf="activeTab === 'solicitudes'">
+    <div class="section-header">
+      <h2>Peticiones Pendientes</h2>
+      <p>Revisa y gestiona las nuevas solicitudes de asesoría</p>
+    </div>
+
+    <div class="solicitudes-grid" *ngIf="solicitudesPendientes.length > 0; else noSolicitudes">
+      <div class="solicitud-card" *ngFor="let solicitud of solicitudesPendientes">
+        <div class="card-header">
+          <div class="user-info">
+            <div class="avatar">{{ solicitud.nombreUsuario.charAt(0).toUpperCase() }}</div>
+            <div class="user-details">
+              <h3>{{ solicitud.nombreUsuario }}</h3>
+              <p class="email">{{ solicitud.correo }}</p>
+            </div>
+          </div>
+          <span class="urgencia-badge" [ngClass]="getUrgenciaClass(solicitud.urgencia)">
+            {{ solicitud.urgencia | titlecase }}
+          </span>
+        </div>
+
+        
+
+        <div class="card-actions">
+          <button class="btn btn-rechazar" (click)="rechazarSolicitud(solicitud)">
+            <i class="icon-x"></i>
+            Rechazar
+          </button>
+          <button class="btn btn-aceptar" (click)="aceptarSolicitud(solicitud)">
+            <i class="icon-check"></i>
+            Aceptar y Programar
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <ng-template #noSolicitudes>
+      <div class="empty-state">
+        <div class="empty-icon">📋</div>
+        <h3>No hay solicitudes pendientes</h3>
+        <p>Todas las solicitudes han sido procesadas</p>
+      </div>
+    </ng-template>
+  </div>
+
+  <!-- Contenido de Mis Asesorías -->
+  <div class="tab-content" *ngIf="activeTab === 'asesorias'">
+    <div class="section-header">
+      <h2>Mis Asesorías Programadas</h2>
+      <p>Asesorías aceptadas y agendadas</p>
+    </div>
+
+    <div class="asesorias-grid" *ngIf="misAsesorias.length > 0; else noAsesorias">
+      <div class="asesoria-card" *ngFor="let asesoria of misAsesorias">
+        <div class="card-header">
+          <div class="user-info">
+            <div class="avatar">{{ asesoria.nombreUsuario.charAt(0).toUpperCase() }}</div>
+            <div class="user-details">
+              <h3>{{ asesoria.nombreUsuario }}</h3>
+              <p class="email">{{ asesoria.correo }}</p>
+            </div>
+          </div>
+          <span class="estado-badge" [ngClass]="getEstadoClass(asesoria.estado)">
+            {{ asesoria.estado | titlecase }}
+          </span>
+        </div>
+
+       
+
+        <div class="card-actions">
+          <button class="btn btn-secondary">
+            <i class="icon-edit"></i>
+            Reprogramar
+          </button>
+          <button class="btn btn-primary">
+            <i class="icon-video"></i>
+            Iniciar Sesión
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <ng-template #noAsesorias>
+      <div class="empty-state">
+        <div class="empty-icon">📅</div>
+        <h3>No tienes asesorías programadas</h3>
+        <p>Las asesorías aceptadas aparecerán aquí</p>
+      </div>
+    </ng-template>
+  </div>
+</div>

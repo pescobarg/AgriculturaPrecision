@@ -75,7 +75,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
         { label: 'Sensores', icon: '📡', action: () => this.irSensores() },
         { label: 'Buscar', icon: '🔍', action: () => this.irBuscar() },
         { label: 'Blog', icon: '📝', action: () => this.irBlog() },
-        { label: 'Asesoría', icon: '💡', action: () => this.irAsesoria() }
+        { label: 'Asesoría', icon: '💡', action: () => this.irAsesoria() },
+        { label: 'Dashboard', icon: '📊', action: () => this.irDashboardAgricultor() }
       );
     }
 
@@ -84,7 +85,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.navItems.push(
         { label: 'Productos', icon: '📦', action: () => this.irProductos() },
         { label: 'Blog', icon: '📝', action: () => this.irBlog() },
-        { label: 'Asesoría', icon: '💡', action: () => this.irAsesoria() }
+        { label: 'Asesoría', icon: '💡', action: () => this.irAsesoria() },
+        { label: 'Dashboard', icon: '📊', action: () => this.irDashboardProveedor() }
       );
     }
 
@@ -92,7 +94,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     if (roles.includes('EXPERTO')) {
       this.navItems.push(
         { label: 'Citas', icon: '📅', action: () => this.irCitas() },
-        { label: 'Blog', icon: '📝', action: () => this.irBlog() }
+        { label: 'Blog', icon: '📝', action: () => this.irBlog() },
+        { label: 'Dashboard', icon: '📊', action: () => this.irDashboardExperto() }
       );
     }
 
@@ -100,10 +103,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
     if (roles.includes('ADMINISTRADOR')) {
       this.navItems = [
         { label: 'Panel', icon: '⚙️', action: () => this.irPanelControl() },
-        { label: 'Sensores', icon: '📡', action: () => this.irSensores() },
-        { label: 'Productos', icon: '📦', action: () => this.irProductos() },
+        { label: 'Productos', icon: '📦', action: () => this.irBuscar() },
         { label: 'Blog', icon: '📝', action: () => this.irBlog() },
-        { label: 'Asesoría', icon: '💡', action: () => this.irAsesoria() }
+        { label: 'Asesoría', icon: '💡', action: () => this.irAsesoria() },
+        { label: 'Dashboard', icon: '📊', action: () => this.irDashboardAdmin() }
+
       ];
     }
   }
@@ -123,35 +127,50 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   // Nuevos métodos de navegación según roles
   irSensores() {
-    this.router.navigate(['/home']);
+    this.router.navigate(['/sensores']);
   }
 
   irBuscar() {
-    this.router.navigate(['/home']);
+    this.router.navigate(['/buscar']);
   }
 
   irProductos() {
-    this.router.navigate(['/home']);
+    this.router.navigate(['/productos']);
   }
 
   irCitas() {
-    this.router.navigate(['/home']);
+    this.router.navigate(['/citas']);
   }
 
   irBlog() {
-    this.router.navigate(['/home']);
+    this.router.navigate(['/blog']);
   }
 
   irAsesoria() {
-    this.router.navigate(['/home']);
+    this.router.navigate(['/asesorias']);
   }
+
 
   irPanelControl() {
-    this.router.navigate(['/home']);
+    this.router.navigate(['/panel']);
   }
 
-  irNotificaciones() {
-    this.router.navigate(['/home']);
+
+  
+  irDashboardAgricultor() { 
+    this.router.navigate(['/agricultor-dashboard']); 
+  }
+  
+  irDashboardAdmin() { 
+    this.router.navigate(['/admin-dashboard']); 
+  }
+
+  irDashboardProveedor() { 
+    this.router.navigate(['/proveedor-dashboard']); 
+  }
+
+  irDashboardExperto() { 
+    this.router.navigate(['/experto-dashboard']); 
   }
 
   logout() {

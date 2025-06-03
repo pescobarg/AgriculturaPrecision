@@ -1,0 +1,393 @@
+.asesorias-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Navegación entre secciones */
+.seccion-nav {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 30px;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.nav-btn {
+  background: none;
+  border: none;
+  padding: 15px 25px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #666;
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  transition: all 0.3s ease;
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.nav-btn:hover {
+  color: #2e7d32;
+  background-color: #f1f8e9;
+}
+
+.nav-btn.active {
+  color: #2e7d32;
+  border-bottom-color: #2e7d32;
+  background-color: #f1f8e9;
+}
+
+.badge {
+  background-color: #2e7d32;
+  color: white;
+  font-size: 12px;
+  padding: 2px 6px;
+  border-radius: 10px;
+  min-width: 18px;
+  text-align: center;
+}
+
+/* Headers de sección */
+.seccion-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.seccion-header h2 {
+  color: #2e7d32;
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.seccion-header p {
+  color: #666;
+  font-size: 16px;
+}
+
+/* Grid de expertos */
+.expertos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 25px;
+}
+
+.experto-card {
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 25px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid #e0e0e0;
+}
+
+.experto-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.experto-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.experto-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #4caf50;
+}
+
+.experto-info h3 {
+  color: #2e7d32;
+  margin: 0 0 5px 0;
+  font-size: 18px;
+}
+
+.especialidad {
+  color: #4caf50;
+  font-weight: 500;
+  margin: 0 0 8px 0;
+  font-size: 14px;
+}
+
+.calificacion {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.estrellas {
+  display: flex;
+  gap: 2px;
+}
+
+.estrella {
+  color: #ddd;
+  font-size: 16px;
+}
+
+.estrella.filled {
+  color: #ffc107;
+}
+
+.rating-number {
+  color: #666;
+  font-size: 14px;
+}
+
+.experto-body {
+  margin-bottom: 20px;
+}
+
+.experiencia {
+  color: #666;
+  font-style: italic;
+  margin: 0 0 12px 0;
+  font-size: 14px;
+}
+
+.descripcion {
+  color: #333;
+  line-height: 1.5;
+  margin: 0;
+  font-size: 14px;
+}
+
+.experto-footer {
+  text-align: center;
+}
+
+.btn-solicitar {
+  background: linear-gradient(135deg, #4caf50, #2e7d32);
+  color: white;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 25px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.btn-solicitar:hover {
+  background: linear-gradient(135deg, #45a049, #1b5e20);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+}
+
+/* Lista de asesorías */
+.asesorias-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.asesoria-item {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+  padding: 25px;
+  border: 1px solid #e0e0e0;
+  transition: box-shadow 0.3s ease;
+}
+
+.asesoria-item:hover {
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+}
+
+.asesoria-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 15px;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.asesoria-info h4 {
+  color: #2e7d32;
+  margin: 0 0 5px 0;
+  font-size: 18px;
+}
+
+.fecha {
+  color: #888;
+  font-size: 13px;
+  margin: 5px 0 0 0;
+}
+
+/* Estados */
+.estado-badge {
+  padding: 8px 15px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.estado-pendiente {
+  background-color: #fff3cd;
+  color: #856404;
+  border: 1px solid #ffeaa7;
+}
+
+.estado-aceptada {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.estado-rechazada {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+/* Información de contacto */
+.contacto-info {
+  background: linear-gradient(135deg, #e8f5e8, #f1f8e9);
+  border-radius: 10px;
+  padding: 20px;
+  margin-top: 15px;
+  border: 1px solid #c8e6c9;
+}
+
+.contacto-info h5 {
+  color: #2e7d32;
+  margin: 0 0 15px 0;
+  font-size: 16px;
+}
+
+.contacto-detalles {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.contacto-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: white;
+  padding: 12px 15px;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+}
+
+.contacto-item .icon {
+  font-size: 18px;
+}
+
+.contacto-text {
+  color: #333;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+/* Mensajes de estado */
+.estado-mensaje {
+  margin-top: 15px;
+  padding: 15px;
+  border-radius: 8px;
+  background-color: #f8f9fa;
+  border-left: 4px solid #6c757d;
+}
+
+.estado-mensaje p {
+  margin: 0;
+  color: #495057;
+  font-size: 14px;
+}
+
+/* Estado vacío */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+.empty-icon {
+  font-size: 60px;
+  margin-bottom: 20px;
+}
+
+.empty-state h3 {
+  color: #2e7d32;
+  margin-bottom: 10px;
+  font-size: 24px;
+}
+
+.empty-state p {
+  color: #666;
+  margin-bottom: 30px;
+  font-size: 16px;
+}
+
+.btn-explorar {
+  background: linear-gradient(135deg, #4caf50, #2e7d32);
+  color: white;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 25px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-explorar:hover {
+  background: linear-gradient(135deg, #45a049, #1b5e20);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .asesorias-container {
+    padding: 15px;
+  }
+  
+  .expertos-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .experto-card {
+    padding: 20px;
+  }
+  
+  .asesoria-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .nav-btn {
+    padding: 12px 15px;
+    font-size: 14px;
+  }
+  
+  .seccion-header h2 {
+    font-size: 24px;
+  }
+  
+  .contacto-detalles {
+    gap: 8px;
+  }
+  
+  .contacto-item {
+    padding: 10px 12px;
+  }
+  
+  .contacto-text {
+    font-size: 13px;
+  }
+}
